@@ -47,7 +47,7 @@ export function converter(
     .parse(markdown) as Root;
 
   const context: Context = {
-    options: mergedOptions as any,
+    options: mergedOptions as Required<ConverterOptions>,
     indentLevel: 0,
     handlers: activeHandlers,
   };

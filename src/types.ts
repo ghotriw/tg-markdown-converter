@@ -25,4 +25,4 @@ export type Handler<T extends Nodes = Nodes> = (
   traverse: TraverseFn,
 ) => string;
 
-export type HandlersMap = Partial<Record<Nodes["type"], Handler<any>>>;
+export type HandlersMap = Partial<Record<Nodes["type"], Handler>>;

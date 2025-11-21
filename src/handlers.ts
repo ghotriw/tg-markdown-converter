@@ -1,4 +1,4 @@
-import type { Code, Image, Link, List, Parent, Root, Text } from "mdast";
+import type { Code, Image, Link, List, ListItem, Html, Heading, Parent, Root, Text, Nodes } from "mdast";
 import type { HandlersMap, HeadingLevel } from "./types.ts";
 import { escapeCode, escapeText, escapeUrl } from "./utils.ts";
 
@@ -38,12 +38,13 @@ export const handlers: HandlersMap = {
   },
 
   heading: (node, ctx, traverse) => {
-    const level = node.depth as 1 | 2 | 3 | 4 | 5 | 6;
+    const headingNode = node as Heading;
+    const level = headingNode.depth;
     const headingMap = ctx.options.headingEmojis || {};
     const key = `h${level}` as HeadingLevel;
     const emojiValue = headingMap[key];
     const emoji = emojiValue ? escapeText(emojiValue) : "";
-    const text = traverse((node as Parent).children, ctx);
+    const text = traverse(headingNode.children, ctx);
     return `*${emoji} ${text}*`;
   },
 
@@ -80,7 +81,8 @@ export const handlers: HandlersMap = {
     return list.children.map((item, index) => {
       const marker = isOrdered ? `${start + index}${ctx.options.olSeparator}` : ctx.options.ulMarker;
 
-      const checked = (item as any).checked;
+      const listItem = item as ListItem;
+      const checked = listItem.checked;;
       let prefix = "";
       if (checked === true) prefix = "[x] ";
       if (checked === false) prefix = "[ ] ";
@@ -109,7 +111,7 @@ export const handlers: HandlersMap = {
       joinSeparator: "\n",
       handlers: {
         ...ctx.handlers,
-        text: (n: any) => escapeCode((n as Text).value),
+        text: (n: Nodes) => escapeCode((n as Text).value),
       },
     };
 
@@ -130,6 +132,6 @@ export const handlers: HandlersMap = {
   },
 
   html: (node) => {
-    return `\`${escapeCode((node as any).value)}\``;
+    return `\`${escapeCode((node as Html).value)}\``;
   },
 };
