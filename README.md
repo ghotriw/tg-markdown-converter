@@ -1,6 +1,6 @@
 # tg-markdown-converter
 
-[![Node.js CI](https://github.com/ghotriw/tg-markdown-converter/actions/workflows/test.yml/badge.svg)](https://github.com/ghotriw/tg-markdown-converter/actions/workflows/test.yml)
+[![Deno](https://github.com/ghotriw/tg-markdown-converter/actions/workflows/deno.yml/badge.svg)](https://github.com/ghotriw/tg-markdown-converter/actions/workflows/deno.yml)
 
 A robust, **AST-based converter** that transforms standard Markdown (and GFM) into **Telegram's MarkdownV2** format.
 
