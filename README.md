@@ -18,18 +18,26 @@ A robust, **AST-based converter** that transforms standard Markdown (and GFM) in
 
 ## 📦 Installation
 
-### Usage in Deno / JSR
+### Usage in Deno (JSR)
 
 ```bash
-npm install tg-markdown-converter
+deno add jsr:@ghotriw/tg-markdown-converter
 ```
 
-### Installation for Node.js (NPM)
-
-To install the package in a Node.js project, use npm (or yarn/pnpm):
+### Usage in Node.js (NPM)
 
 ```bash
 npm install tg-markdown-converter
+# or
+yarn add tg-markdown-converter
+# or
+pnpm add tg-markdown-converter
+```
+
+### Usage in Bun
+
+```bash
+bun add tg-markdown-converter
 ```
 
 ## ⚡ Quick Start
