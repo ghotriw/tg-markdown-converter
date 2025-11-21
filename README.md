@@ -1,7 +1,7 @@
 # tg-markdown-converter
 
 [![Deno](https://github.com/ghotriw/tg-markdown-converter/actions/workflows/deno.yml/badge.svg)](https://github.com/ghotriw/tg-markdown-converter/actions/workflows/deno.yml)
-[![JSR Score](https://jsr.io/badges/@ghotriw/tg-markdown-converter/score)](https://jsr.io/@<scope>/<package>)
+[![JSR Score](https://jsr.io/badges/@ghotriw/tg-markdown-converter/score)](https://jsr.io/@ghotriw/tg-markdown-converter)
 ![](https://img.shields.io/badge/Compatibility-Bun-000000?logo=bun)
 [![npm version](https://img.shields.io/npm/v/tg-markdown-converter.svg)](https://www.npmjs.com/package/tg-markdown-converter)
 [![bundle size](https://img.shields.io/bundlephobia/minzip/tg-markdown-converter)](https://bundlephobia.com/package/tg-markdown-converter)
