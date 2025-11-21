@@ -33,6 +33,18 @@ const traverse: TraverseFn = (nodes, ctx) => {
     .join(ctx.joinSeparator ?? (ctx.indentLevel === 0 ? "\n\n" : ""));
 };
 
+/**
+ * Converts Markdown text into Telegram's MarkdownV2 format.
+ *
+ * It uses the 'unified' engine with 'remark-parse' and 'remark-gfm'
+ * to create an Abstract Syntax Tree (AST), which is then traversed
+ * and rendered according to custom Telegram-specific rules.
+ *
+ * @param markdown The raw Markdown string to be converted.
+ * @param options Optional settings to customize markers, separators, and heading emojis.
+ * @param customHandlers Optional map of handlers to override default conversion logic for specific AST node types (e.g., 'link', 'paragraph').
+ * @returns The converted string formatted for Telegram MarkdownV2.
+ */
 export function converter(
   markdown: string,
   options: ConverterOptions = {},

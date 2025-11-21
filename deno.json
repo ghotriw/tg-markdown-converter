@@ -1,6 +1,6 @@
 {
   "name": "@ghotriw/tg-markdown-converter",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A robust, AST-based converter from Markdown to Telegram MarkdownV2",
   "license": "MIT",
   "repository": {

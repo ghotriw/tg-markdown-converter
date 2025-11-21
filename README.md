@@ -1,6 +1,12 @@
 # tg-markdown-converter
 
 [![Deno](https://github.com/ghotriw/tg-markdown-converter/actions/workflows/deno.yml/badge.svg)](https://github.com/ghotriw/tg-markdown-converter/actions/workflows/deno.yml)
+![](https://img.shields.io/badge/Runtime%20Compatibility-Bun-000000?logo=bun)
+[![npm version](https://img.shields.io/npm/v/tg-markdown-converter.svg)](https://www.npmjs.com/package/tg-markdown-converter)
+[![bundle size](https://img.shields.io/bundlephobia/minzip/tg-markdown-converter)](https://bundlephobia.com/package/tg-markdown-converter)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+---
 
 A robust, **AST-based converter** that transforms standard Markdown (and GFM) into **Telegram's MarkdownV2** format.
 
@@ -11,6 +17,16 @@ A robust, **AST-based converter** that transforms standard Markdown (and GFM) in
 - **Safe Escaping**: Context-aware escaping logic (separate rules for plain text, code, and URLs).
 
 ## 📦 Installation
+
+### Usage in Deno / JSR
+
+```bash
+npm install tg-markdown-converter
+```
+
+### Installation for Node.js (NPM)
+
+To install the package in a Node.js project, use npm (or yarn/pnpm):
 
 ```bash
 npm install tg-markdown-converter
