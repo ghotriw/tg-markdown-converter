@@ -123,7 +123,7 @@ console.log(result);
 ## 🧪 Run tests:
 
 ```Bash
-npm test
+deno task test
 ```
 
 ## 📜 License
