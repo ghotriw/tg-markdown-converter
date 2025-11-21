@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+/.pnp
+.pnp.js
+
+# Build artifacts
+dist/
+lib/
+npm/
+*.tsbuildinfo
+
+# Logs and debug files
+npm-debug.log*
+yarn-error.log
+yarn-debug.log*
+.eslintcache
+.yarn-integrity
+
+# IDE and OS files
+.DS_Store
+.vscode/
+
+# Testing
+/coverage
