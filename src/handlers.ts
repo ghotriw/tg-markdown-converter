@@ -1,4 +1,4 @@
-import type { Code, Image, Link, List, ListItem, Html, Heading, Parent, Root, Text, Nodes } from "mdast";
+import type { Code, Heading, Html, Image, Link, List, ListItem, Nodes, Parent, Root, Text } from "mdast";
 import type { HandlersMap, HeadingLevel } from "./types.ts";
 import { escapeCode, escapeText, escapeUrl } from "./utils.ts";
 
@@ -82,7 +82,7 @@ export const handlers: HandlersMap = {
       const marker = isOrdered ? `${start + index}${ctx.options.olSeparator}` : ctx.options.ulMarker;
 
       const listItem = item as ListItem;
-      const checked = listItem.checked;;
+      const checked = listItem.checked;
       let prefix = "";
       if (checked === true) prefix = "[x] ";
       if (checked === false) prefix = "[ ] ";

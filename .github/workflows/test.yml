@@ -12,7 +12,7 @@ jobs:
 
     permissions:
       contents: read
-      id-token: write 
+      id-token: write
 
     steps:
       - name: Git Checkout
