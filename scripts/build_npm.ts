@@ -19,7 +19,7 @@ await build({
     license: "MIT",
     repository: {
       type: "git",
-      url: "git+https://github.com/ghotriw/tg-markdown-converter.git",
+      url: "https://github.com/ghotriw/tg-markdown-converter",
     },
     bugs: {
       url: "https://github.com/ghotriw/tg-markdown-converter/issues",
