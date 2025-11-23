@@ -14,6 +14,7 @@ export interface ConverterOptions {
   imgMarker?: string;
   thematicBreak?: string;
   headingEmojis?: Record<HeadingLevel, string>;
+  splitAt?: number;
 }
 
 /**
@@ -58,3 +59,23 @@ export type Handler<T extends Nodes = Nodes> = (
  * for specific Markdown AST node types (e.g., 'code', 'link', 'blockquote').
  */
 export type HandlersMap = Partial<Record<Nodes["type"], Handler>>;
+
+/**
+ * Helper type to determine the return type based on options.
+ * If 'splitAt' is present in T, return string[], otherwise string.
+ */
+export type ConverterOutput<T> = T extends { splitAt: number } ? string[] : string;
+
+/**
+ * A function that can split ONE huge node into an array of ready-made strings (chunks).
+ * @param node - The node itself (Code, List, Blockquote, etc.)
+ * @param ctx - Context (options, handlers)
+ * @param traverse - Render function (needed if we render children within the strategy)
+ * @param limit - Character limit (usually 4096)
+ */
+export type SplitStrategy = (
+  node: Nodes,
+  ctx: Context,
+  traverse: TraverseFn,
+  limit: number,
+) => string[];

@@ -16,6 +16,7 @@ A robust, **AST-based converter** that transforms standard Markdown (and GFM) in
 - **AST-Driven**: Powered by `remark-parse` and `remark-gfm`.
 - **Configurable**: Customize bullet points, heading styles, and separators.
 - **Safe Escaping**: Context-aware escaping logic (separate rules for plain text, code, and URLs).
+- **Smart Splitting**: Automatically splits long messages into chunks (e.g., 4096 chars) ensuring valid Markdown syntax at boundaries.
 
 ## 📦 Installation
 
@@ -67,7 +68,6 @@ console.log(telegramSafe);
 
 ```ts
 const options = {
-  
   olSeparator: ')',  // 1) instead of 1.
   ulMarker: '-',     // Use dashes instead of dots
   imgMarker: '🎨',   // 🎨 instead of 🖼
@@ -76,19 +76,46 @@ const options = {
     h1: '🔥',
     h2: '✨',
     // ...
-  }
+  },
+  splitAt: 4096
 };
 
 converter(myMarkdown, options);
 ```
 
-| Option          | Type     | Default          |
-|-----------------|----------|------------------|
-| `olSeparator`   | `string` | `.`              |
-| `ulMarker`      | `string` | `•`              |
-| `imgMarker`     | `string` | `🖼`.            |
-| `thematicBreak` | `string` | `▬▬▬▬▬▬▬▬▬▬▬▬▬▬` |
-| `headingEmojis` | `Record<h1...h6, string>` | `{ h1: 📌, h2: ✏️, ... }` |
+| Option          | Type     | Default          | Description |
+|-----------------|----------|------------------|-------------|
+| `olSeparator`   | `string` | `.`              | Separator for ordered lists. |
+| `ulMarker`      | `string` | `•`              | Marker for unordered lists. |
+| `imgMarker`     | `string` | `🖼`             | Marker used before image alt text. |
+| `thematicBreak` | `string` | `▬▬▬▬▬▬▬▬▬▬▬▬▬▬` | String for horizontal rules. |
+| `headingEmojis` | `object` | `{ h1: 📌... }`  | Emojis prefixed to headings. |
+| `splitAt`       | `number` | `undefined`      | Max characters per message chunk (e.g. 4096). |
+
+## ✂️ Message Splitting (Chunking)
+
+Telegram has a limit of 4096 characters per message. If you pass the `splitAt` option, the converter automatically returns an **array of strings** (`string[]`) instead of a single string.
+
+It ensures that the split happens **between** blocks (paragraphs, lists, headers), preserving valid Markdown syntax for each chunk.
+
+Thanks to TypeScript conditional types, the return type is inferred automatically based on the options provided.
+
+```ts
+const longMarkdown = `... very long text ...`;
+
+// 1. Usage with splitting
+// TypeScript infers 'messages' as string[] automatically
+const messages = converter(longMarkdown, { splitAt: 4000 });
+
+for (const msg of messages) {
+  await bot.sendMessage(chatId, msg, { parse_mode: 'MarkdownV2' });
+}
+
+// 2. Standard usage
+// TypeScript infers 'singleMessage' as string
+const singleMessage = converter(longMarkdown);
+await bot.sendMessage(chatId, singleMessage, { parse_mode: 'MarkdownV2' });
+```
 
 ## 🧑‍💻 Advanced Usage (Extensibility)
 

@@ -2,8 +2,9 @@ import { unified } from "unified";
 import remarkParse from "remark-parse";
 import remarkGfm from "remark-gfm";
 import type { Parent, Root } from "mdast";
-import type { Context, ConverterOptions, HandlersMap, TraverseFn } from "./src/types.ts";
+import type { Context, ConverterOptions, ConverterOutput, HandlersMap, TraverseFn } from "./src/types.ts";
 import { handlers } from "./src/handlers.ts";
+import { splitNodes } from "./src/splitter.ts";
 
 const DEFAULT_OPTIONS = {
   olSeparator: ".",
@@ -42,14 +43,14 @@ const traverse: TraverseFn = (nodes, ctx) => {
  *
  * @param markdown The raw Markdown string to be converted.
  * @param options Optional settings to customize markers, separators, and heading emojis.
- * @param customHandlers Optional map of handlers to override default conversion logic for specific AST node types (e.g., 'link', 'paragraph').
- * @returns The converted string formatted for Telegram MarkdownV2.
+ * @param customHandlers Optional map of handlers to override default conversion logic.
+ * @returns The converted string formatted for Telegram MarkdownV2, OR an array of strings if 'splitAt' is provided.
  */
-export function converter(
+export function converter<T extends ConverterOptions>(
   markdown: string,
-  options: ConverterOptions = {},
+  options?: T,
   customHandlers: HandlersMap = {},
-): string {
+): ConverterOutput<T> {
   const mergedOptions = { ...DEFAULT_OPTIONS, ...options };
   const activeHandlers = { ...handlers, ...customHandlers };
 
@@ -64,5 +65,11 @@ export function converter(
     handlers: activeHandlers,
   };
 
-  return traverse([tree], context).trim();
+  if (options && typeof options.splitAt === "number") {
+    const chunks = splitNodes(tree.children, context, traverse, options.splitAt);
+    return chunks as ConverterOutput<T>;
+  }
+
+  const result = traverse([tree], context).trim();
+  return result as ConverterOutput<T>;
 }
