@@ -12,7 +12,6 @@ jobs:
 
     permissions:
       contents: read
-      id-token: write
 
     steps:
       - name: Git Checkout
@@ -36,7 +35,29 @@ jobs:
         run: deno task test
 
       - name: JSR Publish Dry-Run
-        run: deno task publish-dry-run
+        run: deno publish --dry-run
 
       - name: Verify NPM Build
         run: deno task build:npm
+
+  publish:
+    needs: test
+    runs-on: ubuntu-latest
+
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v2.x
+
+      - name: Publish to JSR
+        run: deno publish
