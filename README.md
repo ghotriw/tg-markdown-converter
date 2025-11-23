@@ -90,11 +90,11 @@ converter(myMarkdown, options);
 | `imgMarker`     | `string` | `🖼`             | Marker used before image alt text. |
 | `thematicBreak` | `string` | `▬▬▬▬▬▬▬▬▬▬▬▬▬▬` | String for horizontal rules. |
 | `headingEmojis` | `object` | `{ h1: 📌... }`  | Emojis prefixed to headings. |
-| `splitAt`       | `number` | `undefined`      | Max characters per message chunk (e.g. 4096). |
+| `splitAt`       | `number` | `undefined`      | Max characters per output chunk (e.g. 4096). |
 
 ## ✂️ Message Splitting (Chunking)
 
-Telegram has a limit of 4096 characters per message. If you pass the `splitAt` option, the converter automatically returns an **array of strings** (`string[]`) instead of a single string.
+Telegram has a limit of 4096 characters per chunk. If you pass the `splitAt` option, the converter automatically returns an **array of strings** (`string[]`) instead of a single string.
 
 It ensures that the split happens **between** blocks (paragraphs, lists, headers), preserving valid Markdown syntax for each chunk.
 
@@ -104,17 +104,17 @@ Thanks to TypeScript conditional types, the return type is inferred automaticall
 const longMarkdown = `... very long text ...`;
 
 // 1. Usage with splitting
-// TypeScript infers 'messages' as string[] automatically
-const messages = converter(longMarkdown, { splitAt: 4000 });
+// TypeScript infers 'chunks' as string[] automatically
+const chunks = converter(longMarkdown, { splitAt: 4000 }); // <-- chunks
 
-for (const msg of messages) {
-  await bot.sendMessage(chatId, msg, { parse_mode: 'MarkdownV2' });
+for (const chunk of chunks) { // <-- chunk
+  await bot.sendMessage(chatId, chunk, { parse_mode: 'MarkdownV2' }); // <-- chunk
 }
 
 // 2. Standard usage
-// TypeScript infers 'singleMessage' as string
-const singleMessage = converter(longMarkdown);
-await bot.sendMessage(chatId, singleMessage, { parse_mode: 'MarkdownV2' });
+// TypeScript infers 'singleChunk' as string
+const singleChunk = converter(longMarkdown); // <-- singleChunk
+await bot.sendMessage(chatId, singleChunk, { parse_mode: 'MarkdownV2' });
 ```
 
 ## 🧑‍💻 Advanced Usage (Extensibility)
